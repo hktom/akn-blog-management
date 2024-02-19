@@ -7,7 +7,7 @@ beforeAll(async () => {
   return jest.mock("axios");
 });
 
-describe("Post related tests", () => {
+describe("Comment tests", () => {
   test("Get comments", async () => {
     const resp = { data: fakeComment, status: 200, error: null };
     axios.get = jest.fn().mockResolvedValue(resp);
