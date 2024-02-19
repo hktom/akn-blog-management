@@ -1,16 +1,22 @@
+import Cookie from "../cookie/cookies";
 import { IUser } from "../user/interface";
 import User from "../user/user";
 import { AuthenticationInterface, IAuthResponse } from "./interface";
 
 class Authentication implements AuthenticationInterface {
-  constructor(private user: User) {}
+  constructor(
+    private user: User,
+    private password: string,
+    private token: string,
+    private cookie: Cookie
+  ) {}
 
   private checkEmail(email: string): boolean {
     return /@/.test(email);
   }
 
   private checkPassword(password: string): boolean {
-    return password === process.env.NEXT_PUBLIC_DEFAULT_USER_PASSWORD;
+    return password === this.password;
   }
 
   async login(
@@ -39,14 +45,17 @@ class Authentication implements AuthenticationInterface {
       };
     }
 
+    await this.cookie.create(this.token);
+
     return {
-      sessionId: process.env.NEXT_PUBLIC_TOKEN,
+      sessionId: this.token,
       userId: (data as IUser).id,
       message: "User logged in",
     };
   }
 
   async logout(): Promise<Partial<IAuthResponse>> {
+    await this.cookie.remove();
     return {
       message: "User logged out",
     };

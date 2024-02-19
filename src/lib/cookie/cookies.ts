@@ -25,6 +25,11 @@ class Cookie implements CookieInterface {
 
     return true;
   }
+
+  async getCookie(): Promise<string | null> {
+    const cookie = await this.cookie().get(this.cookieName);
+    return cookie?.value || null;
+  }
 }
 
 export default Cookie;
