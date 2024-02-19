@@ -1,7 +1,18 @@
-import { CommentInterface, ICommentResponse } from "./interface";
+import { CommentInterface, IComment, ICommentResponse } from "./interface";
 
 class Commentary implements CommentInterface {
   constructor(private axios: any, private url: string) {}
+
+  static addComment(payload: IComment, comments: IComment[]): ICommentResponse {
+    const data = [...comments];
+    data.unshift(payload);
+    
+    return {
+      status: 200,
+      error: null,
+      data,
+    };
+  }
 
   async getComments(postId: number): Promise<ICommentResponse> {
     const resp: ICommentResponse = await this.axios.get(
