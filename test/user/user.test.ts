@@ -9,7 +9,7 @@ beforeAll(async () => {
 
 describe("User tests", () => {
   test("Get user by id", async () => {
-    const resp = { data: fakeUser, status: 200, error: null };
+    const resp = { data: fakeUser[0], status: 200, error: null };
     axios.get = jest.fn().mockResolvedValue(resp);
 
     const user = new User(axios, process.env.NEXT_PUBLIC_API_URL as string);
