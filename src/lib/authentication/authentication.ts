@@ -60,6 +60,21 @@ class Authentication implements AuthenticationInterface {
       message: "User logged out",
     };
   }
+
+  async checkSession(): Promise<Partial<IAuthResponse>> {
+    const sessionId = await this.cookie.getCookie();
+    if (!sessionId) {
+      return {
+        message: "No session",
+        error: "No session",
+      };
+    }
+
+    return {
+      sessionId,
+      message: "Session found",
+    };
+  }
 }
 
 export default Authentication;
