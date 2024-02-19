@@ -5,14 +5,14 @@ export interface IPost {
   body: string;
 }
 
-export interface IAxios {
+export interface IPostResponse {
   status: number;
   data: IPost | IPost[] | null;
   error: any;
 }
 
 export interface PostInterface {
-  getPost(): Promise<IAxios>;
-  showPost(id: number): Promise<IAxios>;
-  addPost(post: IPost): Promise<IAxios>;
+  getPost(): Promise<IPostResponse>;
+  showPost(id: number): Promise<IPostResponse>;
+  addPost(post: IPost): Promise<IPostResponse>;
 }
