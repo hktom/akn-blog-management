@@ -1,48 +1,21 @@
-import axios from "axios";
-
-export interface IAxios {
-  status: number;
-  data: any;
-  error: any;
-}
-
-export interface IPost {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
-}
-
-export interface PostInterface {
-  getPost(): void;
-  showPost(id: number): IPost;
-  addPost(post: string): void;
-}
+import { PostInterface, IPost, IAxios } from "./interface";
 
 export default class Post implements PostInterface {
   public posts: IPost[] = [];
   constructor(private axios: any, private url: string) {}
 
-  async getPost() {
+  async getPost(): Promise<IAxios> {
     const resp: IAxios = await this.axios.get(`${this.url}/posts`);
     return resp;
   }
 
-  showPost(id: number): IPost {
-    return {
-      userId: 1,
-      id: 1,
-      title: "title",
-      body: "body",
-    };
+  async showPost(id: number): Promise<IAxios> {
+    const resp: IAxios = await this.axios.get(`${this.url}/posts`);
+    return resp;
   }
 
-  addPost(post: string): IPost {
-    return {
-      userId: 1,
-      id: 1,
-      title: "title",
-      body: "body",
-    };
+  async addPost(post: IPost): Promise<IAxios> {
+    const resp: IAxios = this.axios.post(`${this.url}/posts`, post);
+    return resp;
   }
 }
