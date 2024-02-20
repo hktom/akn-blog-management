@@ -29,10 +29,17 @@ export default async function PostList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {posts.map((row) => (
+            {posts.map((row, index) => (
               <TableRow
-                key={row.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                key={index}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  backgroundColor: index % 2 === 0 ? "#F5F5F5" : "white",
+                  cursor: "pointer",
+                  "&:hover": {
+                    backgroundColor: "#F5F5F5",
+                  },
+                }}
               >
                 <TableCell component="th" scope="row">
                   {row.id}
