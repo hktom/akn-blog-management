@@ -1,9 +1,21 @@
 import FormLogin from "@/component/formLogin";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 function LoginPage() {
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        flexDirection: "column",
+        width: "100%",
+        pt: 20,
+      }}
+    >
+      <Typography component="h1" variant="h3" sx={{ mb: 4 }}>
+        Login
+      </Typography>
       <FormLogin />
     </Box>
   );

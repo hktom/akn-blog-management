@@ -1,5 +1,5 @@
+import AppProvider from "@/config/appProvider";
 import type { Metadata } from "next";
-
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,8 +12,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning={true}>
+      <body style={{ backgroundColor: "#F8FAFB" }} suppressHydrationWarning={true}>
+        <AppProvider>{children}</AppProvider>
+      </body>
     </html>
   );
 }

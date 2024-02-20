@@ -30,10 +30,7 @@ const authentication = new Authentication(
   cookie
 );
 
-export const AppsContext = createContext<Partial<IAppContext>>({
-  currentUser: null,
-  userId: null,
-});
+export const AppsContext = createContext<Partial<IAppContext>>({});
 
 interface IProps {
   children: React.ReactNode;
