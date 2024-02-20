@@ -7,7 +7,6 @@ class Authentication implements AuthenticationInterface {
   constructor(
     private user: User,
     private password: string,
-    private token: string,
     private cookie: Cookie
   ) {}
 
@@ -45,11 +44,11 @@ class Authentication implements AuthenticationInterface {
       };
     }
 
-    await this.cookie.create(this.token);
+    const userId = (data as IUser).id;
 
+    await this.cookie.create(userId.toString());
     return {
-      sessionId: this.token,
-      userId: (data as IUser).id,
+      userId: userId,
       message: "User logged in",
     };
   }
@@ -62,8 +61,8 @@ class Authentication implements AuthenticationInterface {
   }
 
   async checkSession(): Promise<Partial<IAuthResponse>> {
-    const sessionId = await this.cookie.getCookie();
-    if (!sessionId) {
+    const token = await this.cookie.getCookie();
+    if (!token) {
       return {
         message: "No session",
         error: "No session",
@@ -71,8 +70,8 @@ class Authentication implements AuthenticationInterface {
     }
 
     return {
-      sessionId,
-      message: "Session found",
+      userId: parseInt(token),
+      message: "User logged in",
     };
   }
 }

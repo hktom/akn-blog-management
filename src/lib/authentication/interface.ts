@@ -1,5 +1,4 @@
 export interface IAuthResponse {
-  sessionId: string;
   userId: number;
   message: string;
   error: string;
