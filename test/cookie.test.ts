@@ -1,47 +1,46 @@
-import {
-  RequestCookie,
-  ResponseCookies,
-} from "next/dist/compiled/@edge-runtime/cookies";
 import Cookie from "../src/lib/cookie/cookies";
-import { cookies } from "next/headers";
+import Cookies from "js-cookie";
 
 beforeAll(() => {
-  jest.mock("cookies");
-  cookies().set = jest.fn((name: string, value: string): ResponseCookies => {
+  jest.mock("js-cookie");
+  Cookies.set = jest.fn((name: string, value: string): string => {
     localStorage.setItem(name, value);
-    return {} as ResponseCookies;
+    return "";
   });
 
-  cookies().delete = jest.fn((name: string): ResponseCookies => {
+  Cookies.remove = jest.fn((name: string): void => {
     localStorage.removeItem(name);
-    return {} as ResponseCookies;
   });
 
-  cookies().get = jest.fn((name: string): RequestCookie => {
-    return { value: localStorage.getItem(name) } as RequestCookie;
+  Cookies.get = jest.fn((name?: string): any => {
+    if (name) {
+      return localStorage.getItem(name) || undefined;
+    } else {
+      return { mockedKey: "mockedValue" };
+    }
   });
 });
 
 afterAll(() => {
-  const cookie = new Cookie(cookies, "sessionId");
+  const cookie = new Cookie(Cookies, "sessionId");
   return cookie.remove();
 });
 
 describe("Cookies test", () => {
-  it("should create a cookie", () => {
-    const cookie = new Cookie(cookies, "sessionId");
+  it("should create a cookie", async () => {
+    const cookie = new Cookie(Cookies, "sessionId");
     expect(cookie.create("token")).toBeTruthy();
   });
 
-  it("should remove a cookie", () => {
-    const cookie = new Cookie(cookies, "sessionId");
-    cookie.create("token");
-    expect(cookie.remove()).toBeTruthy();
+  it("should remove a cookie", async () => {
+    const cookie = new Cookie(Cookies, "sessionId");
+    await cookie.create("token");
+    expect(await cookie.remove()).toBeTruthy();
   });
 
-  it("should get a cookie", () => {
-    const cookie = new Cookie(cookies, "sessionId");
-    cookie.create("token");
-    expect(cookie.getCookie()).toBe("token");
+  it("should get a cookie", async () => {
+    const cookie = new Cookie(Cookies, "sessionId");
+    await cookie.create("token");
+    expect(await cookie.getCookie()).toBe("token");
   });
 });

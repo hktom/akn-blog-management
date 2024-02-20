@@ -1,19 +1,16 @@
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 import { CookieInterface } from "./interface";
+import Cookies from "js-cookie";
 
 class Cookie implements CookieInterface {
-  private maxAge = 60 * 60 * 24 * 7; // One week
-  private httpOnly = true;
-  private secure = process.env.NODE_ENV === "production";
-  private path = "/";
+  private maxAge = 7;
+  private path = "";
 
-  constructor(private cookie: typeof cookies, private cookieName: string) {}
+  constructor(private cookie: typeof Cookies, private cookieName: string) {}
 
   async create(token: string): Promise<boolean> {
-    await this.cookie().set(this.cookieName, token, {
-      httpOnly: this.httpOnly,
-      secure: this.secure,
-      maxAge: this.maxAge,
+    await this.cookie.set(this.cookieName, token, {
+      expires: this.maxAge,
       path: this.path,
     });
 
@@ -21,14 +18,14 @@ class Cookie implements CookieInterface {
   }
 
   async remove(): Promise<boolean> {
-    await this.cookie().delete(this.cookieName);
+    await this.cookie.remove(this.cookieName);
 
     return true;
   }
 
   async getCookie(): Promise<string | null> {
-    const cookie = await this.cookie().get(this.cookieName);
-    return cookie?.value || null;
+    const cookie = await this.cookie.get(this.cookieName);
+    return cookie || null;
   }
 }
 
