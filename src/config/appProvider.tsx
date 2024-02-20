@@ -7,8 +7,7 @@ import Post from "@/lib/post/post";
 import { IUser } from "@/lib/user/interface";
 import User from "@/lib/user/user";
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
+import { authentication, user, comment, post, cookie } from "./bootsrap";
 
 interface IAppContext {
   user: User;
@@ -19,16 +18,6 @@ interface IAppContext {
   currentUser: IUser | null;
   userId: number | null;
 }
-
-const user = new User(axios, process.env.NEXT_PUBLIC_API_URL || "");
-const comment = new Commentary(axios, process.env.NEXT_PUBLIC_API_URL || "");
-const post = new Post(axios, process.env.NEXT_PUBLIC_API_URL || "");
-const cookie = new Cookie(Cookies, "userId");
-const authentication = new Authentication(
-  user,
-  process.env.NEXT_PUBLIC_DEFAULT_USER_PASSWORD || "",
-  cookie
-);
 
 export const AppsContext = createContext<Partial<IAppContext>>({});
 

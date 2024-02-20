@@ -15,7 +15,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
-const pages = ["Post"];
+const pages = ["New", "All Post"];
 const settings = ["Logout"];
 
 function ResponsiveAppBar() {
