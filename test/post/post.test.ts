@@ -40,7 +40,7 @@ describe("Post related tests", () => {
       body: "body",
     };
 
-    const resp = { data: fakePost.push(payload), status: 200, error: null };
+    const resp = { data: [...fakePost, payload], status: 200, error: null };
     axios.post = jest.fn().mockResolvedValue(resp);
 
     const post = new Post(axios, process.env.NEXT_PUBLIC_API_URL as string);
@@ -48,6 +48,6 @@ describe("Post related tests", () => {
 
     expect(status).toBe(200);
     expect(error).toBeNull();
-    expect(data).toEqual(fakePost.push(payload));
+    expect((data as IPost[]).length).toEqual(fakePost.push(payload));
   });
 });
