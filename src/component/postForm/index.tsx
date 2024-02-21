@@ -6,6 +6,7 @@ import { Alert, Box, Button, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 import Title from "./title";
 import PostAuthor from "../postAuthor";
+import PostComment from "../postComment";
 
 interface IProps {
   data: IPost[];
@@ -91,6 +92,7 @@ function PageForm({ data, setData }: IProps = { data: [], setData: () => {} }) {
           Save
         </Button>
         <PostAuthor />
+        <PostComment />
       </Box>
     </Box>
   );
