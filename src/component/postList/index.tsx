@@ -12,6 +12,7 @@ import { IPost } from "@/lib/post/interface";
 import { Box } from "@mui/material";
 import { AppsContext } from "@/config/appProvider";
 import { useContext, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 interface IProps {
   data: IPost[];
@@ -19,6 +20,7 @@ interface IProps {
 
 export default function PostList({ data }: IProps = { data: [] }) {
   const { postActivity } = useContext(AppsContext);
+  const router = useRouter();
 
   let payload: IPost[] = data;
 
@@ -54,6 +56,7 @@ export default function PostList({ data }: IProps = { data: [] }) {
                   }}
                   onClick={() => {
                     postActivity!.setCurrentPost!(row);
+                    router.push(`/${row.id}`);
                   }}
                 >
                   <TableCell component="th" scope="row">

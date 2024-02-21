@@ -4,8 +4,7 @@ import { AppsContext } from "@/config/appProvider";
 import { IPost } from "@/lib/post/interface";
 import { Alert, Box, Button, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
-import PostAuthor from "../postAuthor";
-import PostComment from "../postComment";
+import { useRouter } from "next/navigation";
 
 function PageForm() {
   const { post, postActivity, userId } = useContext(AppsContext);
@@ -13,6 +12,7 @@ function PageForm() {
   const [error, setError] = useState("");
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,6 +27,7 @@ function PageForm() {
       return;
     }
     postActivity?.add!({ ...(resp!.data as IPost), id });
+    router.push("/");
   };
 
   return (
@@ -71,8 +72,6 @@ function PageForm() {
         <Button variant="contained" type="submit" disabled={loading}>
           Save
         </Button>
-        <PostAuthor />
-        <PostComment />
       </Box>
     </Box>
   );

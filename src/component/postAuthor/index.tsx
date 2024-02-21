@@ -1,26 +1,15 @@
-"use client";
-
-import { AppsContext } from "@/config/appProvider";
+import { user } from "@/config/bootsrap";
+import { IPost } from "@/lib/post/interface";
 import { IUser } from "@/lib/user/interface";
 import { Box, Typography } from "@mui/material";
-import { useContext, useEffect, useState } from "react";
 
-function PostAuthor() {
-  const { currentPost, user } = useContext(AppsContext);
-  const [author, setAuthor] = useState<IUser | null>(null);
+async function PostAuthor({ post }: { post: IPost }) {
+  const { data, error, status } = await user!.getUserById(post.userId);
 
-  useEffect(() => {
-    async function getAuthor() {
-      if (!currentPost || !user) return;
-      const resp = await user!.getUserById(currentPost!.userId);
-      if (resp.data) {
-        setAuthor(resp.data as IUser);
-      }
-    }
-    getAuthor();
-  }, [currentPost, user]);
+  if (error) return <></>;
 
-  if (!currentPost || !author) return <></>;
+  const author = data as IUser;
+
   return (
     <Box sx={{ my: 4 }}>
       <Typography variant="h6" component="h3" sx={{ mb: 2 }}>

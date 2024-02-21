@@ -1,5 +1,7 @@
 import { AppsContext } from "@/config/appProvider";
+import { comment } from "@/config/bootsrap";
 import { IComment } from "@/lib/comment/interface";
+import { IPost } from "@/lib/post/interface";
 import {
   Box,
   Button,
@@ -10,29 +12,20 @@ import {
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 
-function PostComment() {
-  const { currentPost, comment } = useContext(AppsContext);
-  const [data, setData] = useState<IComment[]>([]);
+async function PostComment({ post }: { post: IPost }) {
+  const { data, error } = await comment!.getComments(post.id);
 
-  useEffect(() => {
-    async function getComment() {
-      if (!currentPost) return;
-      const resp = await comment!.getComments(currentPost.id);
-      if (resp.data) {
-        setData(resp.data as IComment[]);
-      }
-    }
-    getComment();
-  }, [comment, currentPost]);
+  if (error) return <></>;
 
-  if (!currentPost || !data.length) return <></>;
+  const comments = data as IComment[];
+
   return (
     <Box sx={{ my: 2 }}>
       <Typography variant="h6" component="h3" sx={{ mb: 2 }}>
         {" "}
         Comments{" "}
       </Typography>
-      {data.map((item, index) => (
+      {comments.map((item, index) => (
         <Card variant="outlined" key={index}>
           <CardContent>
             <Typography

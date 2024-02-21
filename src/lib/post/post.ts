@@ -10,7 +10,7 @@ export default class Post implements PostInterface {
   }
 
   async showPost(id: number): Promise<IPostResponse> {
-    const resp: IPostResponse = await this.axios.get(`${this.url}/posts`);
+    const resp: IPostResponse = await this.axios.get(`${this.url}/posts/${id}`);
     return resp;
   }
 
