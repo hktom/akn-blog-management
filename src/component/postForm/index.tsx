@@ -55,6 +55,7 @@ function PageForm({ data, setData }: IProps = { data: [], setData: () => {} }) {
           variant="outlined"
           type="text"
           fullWidth
+          defaultValue={currentPost?.title}
           onChange={(e) => setTitle(e.target.value)}
         />
 
@@ -66,6 +67,7 @@ function PageForm({ data, setData }: IProps = { data: [], setData: () => {} }) {
           sx={{ my: 2 }}
           variant="outlined"
           fullWidth
+          defaultValue={currentPost?.body}
           onChange={(e) => setBody(e.target.value)}
         />
 

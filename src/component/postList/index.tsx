@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,12 +10,15 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { IPost } from "@/lib/post/interface";
 import { Box } from "@mui/material";
+import { AppsContext } from "@/config/appProvider";
+import { useContext } from "react";
 
 interface IProps {
   posts: IPost[];
 }
 
 export default function PostList({ posts }: IProps = { posts: [] }) {
+  const { setCurrentPost, setPage } = useContext(AppsContext);
   return (
     <Box>
       <TableContainer component={Paper}>
@@ -38,9 +43,13 @@ export default function PostList({ posts }: IProps = { posts: [] }) {
                       backgroundColor: "#F5F5F5",
                     },
                   }}
+                  onClick={() => {
+                    setCurrentPost!(row);
+                    setPage!(1);
+                  }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.id}
+                    {index}
                   </TableCell>
                   <TableCell align="left">{row.title}</TableCell>
                 </TableRow>

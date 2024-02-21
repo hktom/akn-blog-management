@@ -58,9 +58,7 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  const router = useRouter();
-
-  const { setPage } = useContext(AppsContext);
+  const { setPage, setCurrentPost } = useContext(AppsContext);
 
   return (
     <AppBar position="static">
@@ -119,8 +117,8 @@ function ResponsiveAppBar() {
                   key={index}
                   onClick={() => {
                     handleCloseNavMenu();
+                    setCurrentPost!(null);
                     setPage!(index);
-                    // router.push(page.link);
                   }}
                 >
                   <Typography textAlign="center">{page.page}</Typography>
@@ -153,7 +151,7 @@ function ResponsiveAppBar() {
                 key={index}
                 onClick={() => {
                   handleCloseNavMenu();
-                  // router.push(page.link);
+                  setCurrentPost!(null);
                   setPage!(index);
                 }}
                 sx={{ my: 2, color: "white", display: "block" }}

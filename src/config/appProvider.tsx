@@ -21,7 +21,7 @@ interface IAppContext {
   page: number;
   setPage: (page: number) => void;
   currentPost: IPost | null;
-  setCurrentPost: (post: IPost) => void;
+  setCurrentPost: (post: IPost | null) => void;
 }
 
 export const AppsContext = createContext<Partial<IAppContext>>({});
@@ -37,7 +37,7 @@ function AppProvider({ children }: IProps) {
   const [currentPost, setCurrentPost] = useState<IPost | null>(null);
 
   const updatePage = (page: number) => setPage(page);
-  const updatePost = (post: IPost) => setCurrentPost(post);
+  const updatePost = (post: IPost | null) => setCurrentPost(post);
 
   useEffect(() => {
     const getUserId = async () => {
