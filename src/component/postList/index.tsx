@@ -25,24 +25,26 @@ export default function PostList({ posts }: IProps = { posts: [] }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {posts.map((row, index) => (
-              <TableRow
-                key={index}
-                sx={{
-                  "&:last-child td, &:last-child th": { border: 0 },
-                  backgroundColor: index % 2 === 0 ? "#F5F5F5" : "white",
-                  cursor: "pointer",
-                  "&:hover": {
-                    backgroundColor: "#F5F5F5",
-                  },
-                }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.id}
-                </TableCell>
-                <TableCell align="left">{row.title}</TableCell>
-              </TableRow>
-            ))}
+            {posts
+              .sort((a, b) => b.id - a.id)
+              .map((row, index) => (
+                <TableRow
+                  key={index}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                    backgroundColor: index % 2 === 0 ? "#F5F5F5" : "white",
+                    cursor: "pointer",
+                    "&:hover": {
+                      backgroundColor: "#F5F5F5",
+                    },
+                  }}
+                >
+                  <TableCell component="th" scope="row">
+                    {index}
+                  </TableCell>
+                  <TableCell align="left">{row.title}</TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

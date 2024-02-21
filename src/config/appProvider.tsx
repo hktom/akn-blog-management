@@ -8,6 +8,7 @@ import { IUser } from "@/lib/user/interface";
 import User from "@/lib/user/user";
 import { createContext, useEffect, useState } from "react";
 import { authentication, user, comment, post, cookie } from "./bootsrap";
+import { IPost } from "@/lib/post/interface";
 
 interface IAppContext {
   user: User;
@@ -19,6 +20,8 @@ interface IAppContext {
   userId: number | null;
   page: number;
   setPage: (page: number) => void;
+  currentPost: IPost | null;
+  setCurrentPost: (post: IPost) => void;
 }
 
 export const AppsContext = createContext<Partial<IAppContext>>({});
@@ -31,8 +34,10 @@ function AppProvider({ children }: IProps) {
   const [currentUser, setCurrentUser] = useState<IUser | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
   const [page, setPage] = useState(0);
+  const [currentPost, setCurrentPost] = useState<IPost | null>(null);
 
   const updatePage = (page: number) => setPage(page);
+  const updatePost = (post: IPost) => setCurrentPost(post);
 
   useEffect(() => {
     const getUserId = async () => {
@@ -58,6 +63,8 @@ function AppProvider({ children }: IProps) {
         userId,
         page,
         setPage: updatePage,
+        currentPost,
+        setCurrentPost: updatePost,
       }}
     >
       {children}
