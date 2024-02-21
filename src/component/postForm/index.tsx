@@ -4,56 +4,36 @@ import { AppsContext } from "@/config/appProvider";
 import { IPost } from "@/lib/post/interface";
 import { Alert, Box, Button, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
-import Title from "./title";
 import PostAuthor from "../postAuthor";
 import PostComment from "../postComment";
 
-interface IProps {
-  data: IPost[];
-  setData: (data: any) => void;
-}
-
-function PageForm({ data, setData }: IProps = { data: [], setData: () => {} }) {
-  const { post, currentPost, page, userId, setPage } = useContext(AppsContext);
+function PageForm() {
+  const { post, postActivity, userId } = useContext(AppsContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [title, setTitle] = useState(currentPost?.title || "");
-  const [body, setBody] = useState(currentPost?.body || "");
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
 
-  const handleUpdatePost = (payload: IPost) => {
-    setData((prev: any) => {
-      const data = prev.filter((item: IPost) => item.id !== payload.id);
-      return [...data, { ...payload }] as IPost[];
-    });
-  };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading((prev) => !prev);
 
-  const handleAddPost = async (payload: IPost) => {
-    const resp = await post?.addPost(payload);
+    const id = postActivity!.posts!.slice(0, 1)[0].id + 1;
+
+    const resp = await post?.addPost({ title, body, id, userId: userId! });
     if (resp?.error) {
       setError(resp.error);
       setLoading(false);
       return;
     }
-    setData((prev: any) => {
-      return [...prev, { ...payload }] as IPost[];
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading((prev) => !prev);
-    if (!currentPost) {
-      const id = data.slice(0, 1)[0].id + 1;
-      handleAddPost({ title, body, id, userId: userId! });
-    } else {
-      handleUpdatePost({ ...currentPost, title, body });
-    }
-    setPage!(0);
+    postActivity?.add!({ ...(resp!.data as IPost), id });
   };
 
   return (
-    <Box>
-      <Title currentPost={currentPost} />
+    <Box sx={{ maxWidth: "80rem", mt: 5, mx: "auto" }}>
+      <Typography component={"h2"} variant="h3">
+        New Post
+      </Typography>
 
       <Box
         component="form"

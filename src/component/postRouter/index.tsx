@@ -15,7 +15,7 @@ function PostRouter({ posts }: IProps) {
   const [data, setData] = useState<IPost[]>(posts);
 
   if (page === 0) {
-    return <PostList posts={data} />;
+    return <PostList data={data} />;
   }
 
   return <PostForm data={data} setData={setData} />;

@@ -10,6 +10,14 @@ import { createContext, useEffect, useState } from "react";
 import { authentication, user, comment, post, cookie } from "./bootsrap";
 import { IPost } from "@/lib/post/interface";
 
+interface IPostActivity {
+  posts: IPost[];
+  add: (post: IPost) => void;
+  init: (posts: IPost[]) => void;
+  currentPost: IPost | null;
+  setCurrentPost: (post: IPost | null) => void;
+}
+
 interface IAppContext {
   user: User;
   comment: Commentary;
@@ -18,10 +26,7 @@ interface IAppContext {
   authentication: Authentication;
   currentUser: IUser | null;
   userId: number | null;
-  page: number;
-  setPage: (page: number) => void;
-  currentPost: IPost | null;
-  setCurrentPost: (post: IPost | null) => void;
+  postActivity: Partial<IPostActivity>;
 }
 
 export const AppsContext = createContext<Partial<IAppContext>>({});
@@ -33,11 +38,16 @@ interface IProps {
 function AppProvider({ children }: IProps) {
   const [currentUser, setCurrentUser] = useState<IUser | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
-  const [page, setPage] = useState(0);
   const [currentPost, setCurrentPost] = useState<IPost | null>(null);
+  const [posts, setPosts] = useState<IPost[]>([]);
 
-  const updatePage = (page: number) => setPage(page);
-  const updatePost = (post: IPost | null) => setCurrentPost(post);
+  const addPost = (post: IPost) => {
+    setPosts((prev) => [post, ...prev]);
+  };
+
+  const initPosts = (posts: IPost[]) => {
+    setPosts((prev) => [...posts]);
+  };
 
   useEffect(() => {
     const getUserId = async () => {
@@ -61,10 +71,13 @@ function AppProvider({ children }: IProps) {
         authentication,
         currentUser,
         userId,
-        page,
-        setPage: updatePage,
-        currentPost,
-        setCurrentPost: updatePost,
+        postActivity: {
+          currentPost,
+          setCurrentPost,
+          posts,
+          add: addPost,
+          init: initPosts,
+        },
       }}
     >
       {children}

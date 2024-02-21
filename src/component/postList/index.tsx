@@ -11,14 +11,23 @@ import Paper from "@mui/material/Paper";
 import { IPost } from "@/lib/post/interface";
 import { Box } from "@mui/material";
 import { AppsContext } from "@/config/appProvider";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 interface IProps {
-  posts: IPost[];
+  data: IPost[];
 }
 
-export default function PostList({ posts }: IProps = { posts: [] }) {
-  const { setCurrentPost, setPage } = useContext(AppsContext);
+export default function PostList({ data }: IProps = { data: [] }) {
+  const { postActivity } = useContext(AppsContext);
+
+  let payload: IPost[] = data;
+
+  if (postActivity!.posts!.length === 0 && data.length) {
+    postActivity!.init!(data);
+  } else {
+    payload = postActivity!.posts!;
+  }
+
   return (
     <Box>
       <TableContainer component={Paper}>
@@ -30,7 +39,7 @@ export default function PostList({ posts }: IProps = { posts: [] }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {posts
+            {payload
               .sort((a, b) => b.id - a.id)
               .map((row, index) => (
                 <TableRow
@@ -44,8 +53,7 @@ export default function PostList({ posts }: IProps = { posts: [] }) {
                     },
                   }}
                   onClick={() => {
-                    setCurrentPost!(row);
-                    setPage!(1);
+                    postActivity!.setCurrentPost!(row);
                   }}
                 >
                   <TableCell component="th" scope="row">
