@@ -15,6 +15,8 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { AppsContext } from "@/config/appProvider";
 
 interface IPage {
   page: string;
@@ -57,6 +59,8 @@ function ResponsiveAppBar() {
   };
 
   const router = useRouter();
+
+  const { setPage } = useContext(AppsContext);
 
   return (
     <AppBar position="static">
@@ -115,7 +119,8 @@ function ResponsiveAppBar() {
                   key={index}
                   onClick={() => {
                     handleCloseNavMenu();
-                    router.push(page.link);
+                    setPage!(index);
+                    // router.push(page.link);
                   }}
                 >
                   <Typography textAlign="center">{page.page}</Typography>
@@ -148,7 +153,8 @@ function ResponsiveAppBar() {
                 key={index}
                 onClick={() => {
                   handleCloseNavMenu();
-                  router.push(page.link);
+                  // router.push(page.link);
+                  setPage!(index);
                 }}
                 sx={{ my: 2, color: "white", display: "block" }}
               >

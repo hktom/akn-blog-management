@@ -3,6 +3,7 @@ import PostList from "@/component/postList";
 import { Box } from "@mui/material";
 import { post } from "@/config/bootsrap";
 import { IPost } from "@/lib/post/interface";
+import PostRouter from "@/component/postRouter";
 
 export default async function Home() {
   const { data, error, status } = await post?.getPost();
@@ -17,7 +18,7 @@ export default async function Home() {
       <ResponsiveAppBar />
 
       <Box sx={{ maxWidth: "80rem", mx: "auto", mt: 5 }}>
-        <PostList posts={posts} />
+        <PostRouter posts={posts} />
       </Box>
     </Box>
   );

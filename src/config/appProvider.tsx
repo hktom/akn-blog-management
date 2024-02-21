@@ -17,6 +17,8 @@ interface IAppContext {
   authentication: Authentication;
   currentUser: IUser | null;
   userId: number | null;
+  page: number;
+  setPage: (page: number) => void;
 }
 
 export const AppsContext = createContext<Partial<IAppContext>>({});
@@ -28,6 +30,9 @@ interface IProps {
 function AppProvider({ children }: IProps) {
   const [currentUser, setCurrentUser] = useState<IUser | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
+  const [page, setPage] = useState(0);
+
+  const updatePage = (page: number) => setPage(page);
 
   useEffect(() => {
     const getUserId = async () => {
@@ -51,6 +56,8 @@ function AppProvider({ children }: IProps) {
         authentication,
         currentUser,
         userId,
+        page,
+        setPage: updatePage,
       }}
     >
       {children}
