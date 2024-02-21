@@ -15,22 +15,37 @@ function PageForm({ data, setData }: IProps = { data: [], setData: () => {} }) {
   const { post, currentPost, page, userId, setPage } = useContext(AppsContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  const [title, setTitle] = useState(currentPost?.title || "");
+  const [body, setBody] = useState(currentPost?.body || "");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading((prev) => !prev);
-    const id = data.slice(0, 1)[0].id + 1;
-    const resp = await post?.addPost({ title, body, id, userId: userId || 1 });
+  const handleUpdatePost = (payload: IPost) => {
+    setData((prev: any) => {
+      const data = prev.filter((item: IPost) => item.id !== payload.id);
+      return [...data, { ...payload }] as IPost[];
+    });
+  };
+
+  const handleAddPost = async (payload: IPost) => {
+    const resp = await post?.addPost(payload);
     if (resp?.error) {
       setError(resp.error);
       setLoading(false);
       return;
     }
     setData((prev: any) => {
-      return [...prev, { ...resp?.data, id }] as IPost[];
+      return [...prev, { ...payload }] as IPost[];
     });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading((prev) => !prev);
+    if (!currentPost) {
+      const id = data.slice(0, 1)[0].id + 1;
+      handleAddPost({ title, body, id, userId: userId! });
+    } else {
+      handleUpdatePost({ ...currentPost, title, body });
+    }
     setPage!(0);
   };
 
@@ -55,7 +70,7 @@ function PageForm({ data, setData }: IProps = { data: [], setData: () => {} }) {
           variant="outlined"
           type="text"
           fullWidth
-          defaultValue={currentPost?.title}
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
 
@@ -67,7 +82,7 @@ function PageForm({ data, setData }: IProps = { data: [], setData: () => {} }) {
           sx={{ my: 2 }}
           variant="outlined"
           fullWidth
-          defaultValue={currentPost?.body}
+          value={body}
           onChange={(e) => setBody(e.target.value)}
         />
 
