@@ -5,13 +5,10 @@ import {
   waitFor,
   act,
 } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import FormLogin from "../src/component/FormLogin";
-import mockRouter from "next-router-mock";
 import axios from "axios";
 import { fakeUser } from "../test/user/fakeUser";
 import AppProvider from "@/config/appProvider";
-// import { act } from "react-dom/test-utils";
 
 jest.mock("next/navigation", () => require("next-router-mock"));
 jest.mock("axios");
@@ -46,7 +43,7 @@ describe("FormLogin Test", () => {
     const email = screen.getByLabelText("Email");
     const password = screen.getByLabelText("Password");
 
-    fireEvent.change(email, { target: { value: "Sincere@april.biz" } });
+    fireEvent.change(email, { target: { value: fakeUser[0].email } });
     fireEvent.change(password, { target: { value: "admin" } });
 
     await act(async () => {
@@ -66,15 +63,38 @@ describe("FormLogin Test", () => {
     const email = screen.getByLabelText("Email");
     const password = screen.getByLabelText("Password");
 
-    fireEvent.change(email, { target: { value: "admin@admin.com"} });
-    fireEvent.change(password, { target: { value: process.env.NEXT_PUBLIC_DEFAULT_USER_PASSWORD }});
+    fireEvent.change(email, { target: { value: "admin@admin.com" } });
+    fireEvent.change(password, {
+      target: { value: process.env.NEXT_PUBLIC_DEFAULT_USER_PASSWORD },
+    });
 
-    await act(async()=>{
+    await act(async () => {
       await fireEvent.click(screen.getByRole("button"));
-    })
+    });
 
     expect(screen.getByText("User not found")).toBeInTheDocument();
-
   });
-  
+
+  it("should log user successfully", async () => {
+    render(
+      <AppProvider>
+        <FormLogin />
+      </AppProvider>
+    );
+
+    const email = screen.getByLabelText("Email");
+    const password = screen.getByLabelText("Password");
+
+    fireEvent.change(email, { target: { value: fakeUser[2].email } });
+    fireEvent.change(password, {
+      target: { value: process.env.NEXT_PUBLIC_DEFAULT_USER_PASSWORD },
+    });
+
+    await act(async () => {
+      await fireEvent.click(screen.getByRole("button"));
+    });
+
+    expect(screen.queryByText("User not found")).toBeNull();
+    expect(screen.queryByText("Invalid password")).toBeNull();
+  });
 });
