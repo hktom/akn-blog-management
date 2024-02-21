@@ -5,6 +5,7 @@ import { IPost } from "@/lib/post/interface";
 import { Alert, Box, Button, TextField, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 import Title from "./title";
+import PostAuthor from "../postAuthor";
 
 interface IProps {
   data: IPost[];
@@ -89,6 +90,7 @@ function PageForm({ data, setData }: IProps = { data: [], setData: () => {} }) {
         <Button variant="contained" type="submit" disabled={loading}>
           Save
         </Button>
+        <PostAuthor />
       </Box>
     </Box>
   );
