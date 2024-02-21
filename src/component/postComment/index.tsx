@@ -25,7 +25,7 @@ function PostComment() {
     getComment();
   }, [comment, currentPost]);
 
-  if (!currentPost) return <></>;
+  if (!currentPost || !data.length) return <></>;
   return (
     <Box sx={{ my: 2 }}>
       <Typography variant="h6" component="h3" sx={{ mb: 2 }}>
