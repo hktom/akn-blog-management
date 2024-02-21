@@ -19,6 +19,8 @@ async function PostComment({ post }: { post: IPost }) {
 
   const comments = data as IComment[];
 
+  if (comments.length === 0) return <></>;
+
   return (
     <Box sx={{ my: 2 }}>
       <Typography variant="h6" component="h3" sx={{ mb: 2 }}>

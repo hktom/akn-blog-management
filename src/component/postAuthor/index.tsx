@@ -6,7 +6,7 @@ import { Box, Typography } from "@mui/material";
 async function PostAuthor({ post }: { post: IPost }) {
   const { data, error, status } = await user!.getUserById(post.userId);
 
-  if (error) return <></>;
+  if (error || !data) return <></>;
 
   const author = data as IUser;
 
