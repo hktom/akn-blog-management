@@ -5,8 +5,6 @@ import { Alert, Box, Button, TextField } from "@mui/material";
 import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 
-interface IProps {}
-
 function FormLogin() {
   const { authentication, cookie } = useContext(AppsContext);
   const [email, setEmail] = useState("");
