@@ -51,7 +51,7 @@ function FormLogin() {
       <TextField
         id="password"
         name="password"
-        label="password"
+        label="Password"
         variant="outlined"
         type="password"
         fullWidth
