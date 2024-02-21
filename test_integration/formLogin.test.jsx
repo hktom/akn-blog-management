@@ -29,7 +29,6 @@ beforeAll(() => {
 });
 
 describe("FormLogin Test", () => {
-  
   it("should form have field email, password and a login button", () => {
     render(<FormLogin />);
     expect(screen.getByLabelText("Email")).toBeInTheDocument();
@@ -55,6 +54,27 @@ describe("FormLogin Test", () => {
     });
 
     expect(screen.getByText("Invalid password")).toBeInTheDocument();
+  });
+
+  it("should show user not found if email is not in data", async () => {
+    render(
+      <AppProvider>
+        <FormLogin />
+      </AppProvider>
+    );
+
+    const email = screen.getByLabelText("Email");
+    const password = screen.getByLabelText("Password");
+
+    fireEvent.change(email, { target: { value: "admin@admin.com"} });
+    fireEvent.change(password, { target: { value: process.env.NEXT_PUBLIC_DEFAULT_USER_PASSWORD }});
+
+    await act(async()=>{
+      await fireEvent.click(screen.getByRole("button"));
+    })
+
+    expect(screen.getByText("User not found")).toBeInTheDocument();
 
   });
+  
 });
