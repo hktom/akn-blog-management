@@ -21,7 +21,7 @@ function PageForm({ data, setData }: IProps = { data: [], setData: () => {} }) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading((prev) => !prev);
-    const id = data.slice(-1)[0].id + 1;
+    const id = data.slice(0, 1)[0].id + 1;
     const resp = await post?.addPost({ title, body, id, userId: userId || 1 });
     if (resp?.error) {
       setError(resp.error);
@@ -29,7 +29,7 @@ function PageForm({ data, setData }: IProps = { data: [], setData: () => {} }) {
       return;
     }
     setData((prev: any) => {
-      return [...prev, resp?.data] as IPost[];
+      return [...prev, { ...resp?.data, id }] as IPost[];
     });
     setPage!(0);
   };

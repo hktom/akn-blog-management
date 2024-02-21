@@ -40,7 +40,7 @@ export default function PostList({ posts }: IProps = { posts: [] }) {
                   }}
                 >
                   <TableCell component="th" scope="row">
-                    {index}
+                    {row.id}
                   </TableCell>
                   <TableCell align="left">{row.title}</TableCell>
                 </TableRow>
