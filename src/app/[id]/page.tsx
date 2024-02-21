@@ -15,18 +15,25 @@ async function PageDetails({ params }: { params: { id: string } }) {
   return (
     <Box>
       <ResponsiveAppBar />
-      <Box sx={{ maxWidth: "80rem", mt: 5, mx: "auto" }}>
-        <Box sx={{ maxWidth: "40rem", px: 3, py: 10, bgcolor: "#fff" }}>
-          <Typography component={"h2"} variant="h3">
-            {data.title}
-          </Typography>
-          <Typography component={"p"} variant="body1">
-            {data.body}
-          </Typography>
+      <Box
+        sx={{
+          maxWidth: "80rem",
+          mt: 5,
+          mx: "auto",
+          bgcolor: "#fff",
+          px: 10,
+          py: 10,
+        }}
+      >
+        <Typography component={"h2"} variant="h3">
+          {data.title}
+        </Typography>
+        <Typography component={"p"} variant="body1">
+          {data.body}
+        </Typography>
 
-          <PostAuthor post={data} />
-          <PostComment post={data} />
-        </Box>
+        <PostAuthor post={data} />
+        <PostComment post={data} />
       </Box>
     </Box>
   );
