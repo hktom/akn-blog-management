@@ -24,7 +24,6 @@ function FormLogin() {
     }
     cookie!.create(resp.userId?.toString() || "");
     await fetchCurrentUser!();
-    setLoading((prev) => !prev);
     router.push("/");
   };
 

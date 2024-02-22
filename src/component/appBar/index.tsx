@@ -59,7 +59,8 @@ function ResponsiveAppBar() {
   };
 
   const router = useRouter();
-  const { authentication, currentUser, fetchCurrentUser } = useContext(AppsContext);
+  const { authentication, currentUser, fetchCurrentUser } =
+    useContext(AppsContext);
 
   return (
     <AppBar position="static">
@@ -162,7 +163,11 @@ function ResponsiveAppBar() {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <IconButton
+                onClick={handleOpenUserMenu}
+                sx={{ p: 0 }}
+                role="user-menu"
+              >
                 <Avatar
                   alt={currentUser?.name}
                   src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/60/60497cfd7859a805a8c53c7bbacedc0ea2eba3fe_full.jpg"
@@ -185,19 +190,17 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem
-                  key={setting}
-                  onClick={async () => {
-                    await authentication?.logout();
-                    await fetchCurrentUser!();
-                    handleCloseUserMenu;
-                    router.push("/");
-                  }}
-                >
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem
+                onClick={async () => {
+                  await authentication?.logout();
+                  await fetchCurrentUser!();
+                  handleCloseUserMenu;
+                  router.push("/");
+                }}
+                role="btn-logout"
+              >
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

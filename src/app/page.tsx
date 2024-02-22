@@ -1,6 +1,6 @@
 import ResponsiveAppBar from "@/component/appBar";
 import PostList from "@/component/postList";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { post } from "@/config/bootsrap";
 import { IPost } from "@/lib/post/interface";
 import type { Metadata } from "next";
@@ -24,6 +24,10 @@ export default async function HomePage() {
       <ResponsiveAppBar />
 
       <Box sx={{ maxWidth: "80rem", mx: "auto", mt: 5 }}>
+        <Typography component={"h1"} variant="h3" role="heading" sx={{ mb: 1 }}>
+          Posts
+        </Typography>
+
         <PostList data={posts} />
       </Box>
     </Box>
