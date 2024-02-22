@@ -5,10 +5,10 @@ import {
   waitFor,
   act,
 } from "@testing-library/react";
-import PostAuthor from "../../src/component/postAuthor";
 import AppProvider from "../../src/config/appProvider";
-import Home from "../../src/app/page";
 import axios from "axios";
+import { fakeUser } from "../unit/user/fakeUser";
+import PostAuthor from "@/component/postAuthor";
 
 jest.mock("next/navigation", () => require("next-router-mock"));
 jest.mock("axios");
@@ -22,10 +22,15 @@ beforeAll(() => {
 
 describe("Component Author test", () => {
   it("should not render the author", () => {
-    render(
-      <AppProvider>
-        <PostAuthor />
-      </AppProvider>
-    );
+    render(<PostAuthor author={fakeUser[0]} />);
+    expect(screen.getByText("Author")).toBeInTheDocument();
+    // expect(screen.getByText(fakeUser[0].name)).toBeInTheDocument();
+    // expect(screen.getByText(fakeUser[0].email)).toBeInTheDocument();
+    // expect(screen.getByText(fakeUser[0].phone)).toBeInTheDocument();
+    // expect(screen.getByText(fakeUser[0].address.street)).toBeInTheDocument();
+    // expect(screen.getByText(fakeUser[0].company.name)).toBeInTheDocument();
+    // expect(screen.getByText(fakeUser[0].website)).toBeInTheDocument();
   });
+
+  
 });
