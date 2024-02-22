@@ -3,7 +3,6 @@ import AppProvider from "@/config/appProvider";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import axios from "axios";
 import { fakePost } from "../unit/post/fakePost";
-import HomePage from "@/app/page";
 
 jest.mock("next/navigation", () => require("next-router-mock"));
 jest.mock("axios");

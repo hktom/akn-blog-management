@@ -24,8 +24,8 @@ export default function PostList({ data }: IProps = { data: [] }) {
 
   let payload: IPost[] = data;
 
-  if (postActivity!.posts!.length === 0 && data.length) {
-    postActivity!.init!(data);
+  if (postActivity?.posts?.length === 0 && data.length) {
+    postActivity?.init!(data);
   } else {
     payload = postActivity!.posts!;
   }
@@ -46,6 +46,7 @@ export default function PostList({ data }: IProps = { data: [] }) {
               .map((row, index) => (
                 <TableRow
                   key={index}
+                  role="post-item"
                   sx={{
                     "&:last-child td, &:last-child th": { border: 0 },
                     backgroundColor: index % 2 === 0 ? "#F5F5F5" : "white",
