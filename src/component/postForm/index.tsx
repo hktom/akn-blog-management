@@ -18,7 +18,10 @@ function PageForm() {
     e.preventDefault();
     setLoading((prev) => !prev);
 
-    const id = postActivity!.posts!.slice(0, 1)[0].id + 1;
+    let id = 1;
+    if (postActivity?.posts?.length) {
+      id = postActivity!.posts!.slice(0, 1)[0].id + 1;
+    }
 
     const resp = await post?.addPost({ title, body, id, userId: userId! });
     if (resp?.error) {
@@ -32,7 +35,7 @@ function PageForm() {
 
   return (
     <Box sx={{ maxWidth: "80rem", mt: 5, mx: "auto" }}>
-      <Typography component={"h2"} variant="h3">
+      <Typography component={"h1"} variant="h3">
         New Post
       </Typography>
 
@@ -42,7 +45,7 @@ function PageForm() {
         onSubmit={handleSubmit}
       >
         {error && (
-          <Alert severity="error" sx={{ my: 2 }}>
+          <Alert severity="error" sx={{ my: 2 }} data-testid="error-div">
             {error}
           </Alert>
         )}
@@ -59,7 +62,7 @@ function PageForm() {
 
         <TextField
           id="body"
-          label="body"
+          label="Body"
           multiline
           rows={4}
           sx={{ my: 2 }}

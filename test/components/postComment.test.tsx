@@ -1,8 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import PostComment from "@/component/postComment";
 
-jest.mock("axios");
-
 describe("Component Comments test", () => {
   it("should not render the author", () => {
     render(

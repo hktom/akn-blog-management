@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   keywords: "Home page of the blog",
 };
 
-export default async function Home() {
+export default async function HomePage() {
   const { data, error, status } = await post?.getPost();
   let posts: IPost[] = [];
 
