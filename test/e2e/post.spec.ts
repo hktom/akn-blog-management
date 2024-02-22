@@ -33,3 +33,21 @@ test("show post", async () => {
   await expect(page.getByText("Author")).toBeVisible();
   await expect(page.getByText("Comments")).toBeVisible();
 });
+
+test("add post", async () => {
+  await page.getByRole("button", { name: "New" }).click();
+  await page.waitForURL("http://localhost:3000/new");
+
+  await page.getByLabel("Title").fill("Nowhere to Turn");
+  await page
+    .getByLabel("Body")
+    .fill(
+      "A Nepali immigrant tries to survive, and support a family back home, on a cab driver’s wages in Qatar."
+    );
+
+  await page.getByRole("button", { name: "SAVE" }).click();
+
+  await page.waitForURL("http://localhost:3000");
+
+  await expect(page.getByRole("heading", { name: "Posts" })).toBeVisible();
+});
