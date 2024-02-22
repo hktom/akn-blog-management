@@ -6,9 +6,9 @@ import {
   act,
 } from "@testing-library/react";
 import axios from "axios";
-import { fakeUser } from "../user/fakeUser";
 import AppProvider from "@/config/appProvider";
 import FormLogin from "@/component/formLogin";
+import { fakeUser } from "../unit/user/fakeUser";
 
 jest.mock("next/navigation", () => require("next-router-mock"));
 jest.mock("axios");

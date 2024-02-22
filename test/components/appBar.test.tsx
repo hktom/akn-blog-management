@@ -7,7 +7,7 @@ describe("AppBar Test", () => {
   it("should render the AppBar", () => {
     render(<ResponsiveAppBar />);
 
-    expect(screen.getAllByAltText("Home")).toBeInTheDocument();
-    expect(screen.getAllByAltText("New")).toBeInTheDocument();
+    expect(screen.getAllByText("Home")[0]).toBeInTheDocument();
+    expect(screen.getAllByText("New")[0]).toBeInTheDocument();
   });
 });
