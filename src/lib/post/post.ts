@@ -1,8 +1,9 @@
+import Http from "../http/http";
 import { PostInterface, IPost, IPostResponse } from "./interface";
 
 export default class Post implements PostInterface {
   public posts: IPost[] = [];
-  constructor(private axios: any, private url: string) {}
+  constructor(private axios: Http, private url: string) {}
 
   async getPost(): Promise<IPostResponse> {
     const resp: IPostResponse = await this.axios.get(`${this.url}/posts`);
@@ -15,7 +16,7 @@ export default class Post implements PostInterface {
   }
 
   async addPost(post: IPost): Promise<IPostResponse> {
-    const resp: IPostResponse = this.axios.post(`${this.url}/posts`, post);
+    const resp: IPostResponse = await this.axios.post(`${this.url}/posts`, post);
     return resp;
   }
 }

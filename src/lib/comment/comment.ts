@@ -1,7 +1,8 @@
+import Http from "../http/http";
 import { CommentInterface, IComment, ICommentResponse } from "./interface";
 
 class Commentary implements CommentInterface {
-  constructor(private axios: any, private url: string) {}
+  constructor(private axios: Http, private url: string) {}
 
   static addComment(payload: IComment, comments: IComment[]): ICommentResponse {
     const data = [...comments];

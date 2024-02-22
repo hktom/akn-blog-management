@@ -1,7 +1,8 @@
+import Http from "../http/http";
 import { IUser, IUserResponse, UserInterface } from "./interface";
 
 class User implements UserInterface {
-  constructor(private axios: any, private url: string) {}
+  constructor(private axios: Http, private url: string) {}
 
   async getUserById(userId: number): Promise<IUserResponse> {
     const resp = await this.axios.get(`${this.url}/users/${userId}`);
