@@ -1,5 +1,5 @@
 import { test, expect, Page } from "@playwright/test";
-import { fakePost } from "../unit/post/fakePost";
+
 let page: Page;
 
 test.beforeAll(async ({ browser }) => {
