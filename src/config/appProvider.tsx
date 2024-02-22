@@ -71,13 +71,6 @@ function AppProvider({ children }: IProps) {
     fetchCurrentUser();
   }, []);
 
-  const handleSetCurrentPost = (post: IPost | null) => {
-    if (post) {
-      localStorage.setItem("currentPost", JSON.stringify(post));
-      setCurrentPost(post);
-    }
-  };
-
   return (
     <AppsContext.Provider
       value={{
@@ -91,7 +84,7 @@ function AppProvider({ children }: IProps) {
         fetchCurrentUser,
         postActivity: {
           currentPost,
-          setCurrentPost: handleSetCurrentPost,
+          setCurrentPost: setCurrentPost,
           posts,
           add: addPost,
           init: initPosts,

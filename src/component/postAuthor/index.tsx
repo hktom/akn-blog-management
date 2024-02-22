@@ -3,7 +3,7 @@ import { IPost } from "@/lib/post/interface";
 import { IUser } from "@/lib/user/interface";
 import { Box, Typography } from "@mui/material";
 
-function PostAuthor({ author }: { author: IUser }) {
+function PostAuthor({ author }: { author: IUser | null }) {
   if (!author) return <></>;
 
   return (

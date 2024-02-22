@@ -6,11 +6,12 @@ import { IComment } from "@/lib/comment/interface";
 import { IPost } from "@/lib/post/interface";
 import { IUser } from "@/lib/user/interface";
 import { Box, Typography } from "@mui/material";
+import PostFallBack from "./postFallback";
 
 async function PageDetails({ params }: { params: { id: string } }) {
   const resp = await post.showPost(+params.id);
 
-  if (resp.error) return <></>;
+  if (resp.error) return <PostFallBack postId={+params.id} />;
 
   const data: IPost = resp.data as IPost;
 
