@@ -2,6 +2,7 @@ import axios from "axios";
 import { fakePost } from "./fakePost";
 import Post from "../../src/lib/post/post";
 import { IPost } from "@/lib/post/interface";
+import Http from "@/lib/http/http";
 
 beforeAll(async () => {
   return jest.mock("axios");
@@ -12,7 +13,7 @@ describe("Post related tests", () => {
     const resp = { data: fakePost, status: 200, error: null };
     axios.get = jest.fn().mockResolvedValue(resp);
 
-    const post = new Post(axios, process.env.NEXT_PUBLIC_API_URL as string);
+    const post = new Post(new Http(axios), process.env.NEXT_PUBLIC_API_URL as string);
     const { data, error, status } = await post.getPost();
     expect(status).toBe(200);
     expect(error).toBeNull();
@@ -23,7 +24,7 @@ describe("Post related tests", () => {
     const resp = { data: fakePost.slice(0, 1), status: 200, error: null };
     axios.get = jest.fn().mockResolvedValue(resp);
 
-    const post = new Post(axios, process.env.NEXT_PUBLIC_API_URL as string);
+    const post = new Post(new Http(axios), process.env.NEXT_PUBLIC_API_URL as string);
     const postId = 1;
     const { data, error, status } = await post.showPost(postId);
 
@@ -43,7 +44,7 @@ describe("Post related tests", () => {
     const resp = { data: [...fakePost, payload], status: 200, error: null };
     axios.post = jest.fn().mockResolvedValue(resp);
 
-    const post = new Post(axios, process.env.NEXT_PUBLIC_API_URL as string);
+    const post = new Post(new Http(axios), process.env.NEXT_PUBLIC_API_URL as string);
     const { data, error, status } = await post.addPost(payload);
 
     expect(status).toBe(200);

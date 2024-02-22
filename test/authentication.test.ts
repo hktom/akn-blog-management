@@ -4,6 +4,7 @@ import User from "../src/lib/user/user";
 import { fakeUser } from "./user/fakeUser";
 import axios from "axios";
 import Cookies from "js-cookie";
+import Http from "@/lib/http/http";
 
 beforeAll(() => {
   jest.mock("js-cookie");
@@ -35,7 +36,7 @@ afterAll(() => {
   return cookie.remove();
 });
 
-const user = new User(axios, process.env.NEXT_PUBLIC_API_URL as string);
+const user = new User(new Http(axios), process.env.NEXT_PUBLIC_API_URL as string);
 const cookie = new Cookie(Cookies, "sessionId");
 
 const authentication = new Authentication(

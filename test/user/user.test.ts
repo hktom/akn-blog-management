@@ -2,6 +2,7 @@ import axios from "axios";
 import { fakeUser } from "./fakeUser";
 import User from "../../src/lib/user/user";
 import { IUser } from "@/lib/user/interface";
+import Http from "@/lib/http/http";
 
 beforeAll(async () => {
   return jest.mock("axios");
@@ -12,7 +13,7 @@ describe("User tests", () => {
     const resp = { data: fakeUser[0], status: 200, error: null };
     axios.get = jest.fn().mockResolvedValue(resp);
 
-    const user = new User(axios, process.env.NEXT_PUBLIC_API_URL as string);
+    const user = new User(new Http(axios), process.env.NEXT_PUBLIC_API_URL as string);
     const userId = 1;
     const { data, error, status } = await user.getUserById(userId);
 
@@ -25,7 +26,7 @@ describe("User tests", () => {
     const resp = { data: fakeUser, status: 200, error: null };
     axios.get = jest.fn().mockResolvedValue(resp);
 
-    const user = new User(axios, process.env.NEXT_PUBLIC_API_URL as string);
+    const user = new User(new Http(axios), process.env.NEXT_PUBLIC_API_URL as string);
     const userEmail = "Sincere@april.biz";
     const { data, error, status } = await user.getUserByEmail(userEmail);
 

@@ -2,6 +2,7 @@ import axios from "axios";
 import { fakeComment } from "./fakeComment";
 import Commentary from "../../src/lib/comment/comment";
 import { IComment } from "../../src/lib/comment/interface";
+import Http from "@/lib/http/http";
 
 beforeAll(async () => {
   return jest.mock("axios");
@@ -13,7 +14,7 @@ describe("Comment tests", () => {
     axios.get = jest.fn().mockResolvedValue(resp);
 
     const comment = new Commentary(
-      axios,
+      new Http(axios),
       process.env.NEXT_PUBLIC_API_URL as string
     );
     const postId = 1;
