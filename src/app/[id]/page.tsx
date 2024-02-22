@@ -1,8 +1,10 @@
 import ResponsiveAppBar from "@/component/appBar";
 import PostAuthor from "@/component/postAuthor";
 import PostComment from "@/component/postComment";
-import { post } from "@/config/bootsrap";
+import { comment, post, user } from "@/config/bootsrap";
+import { IComment } from "@/lib/comment/interface";
 import { IPost } from "@/lib/post/interface";
+import { IUser } from "@/lib/user/interface";
 import { Box, Typography } from "@mui/material";
 
 async function PageDetails({ params }: { params: { id: string } }) {
@@ -11,6 +13,12 @@ async function PageDetails({ params }: { params: { id: string } }) {
   if (resp.error) return <></>;
 
   const data: IPost = resp.data as IPost;
+
+  const respAuthor = await user!.getUserById(data.userId);
+  const respComments = await comment!.getComments(data.id);
+
+  const author = respAuthor.data as IUser;
+  const comments = respComments.data as IComment[];
 
   return (
     <Box>
@@ -32,8 +40,8 @@ async function PageDetails({ params }: { params: { id: string } }) {
           {data.body}
         </Typography>
 
-        <PostAuthor post={data} />
-        <PostComment post={data} />
+        <PostAuthor author={author} />
+        <PostComment comments={comments} />
       </Box>
     </Box>
   );

@@ -3,12 +3,8 @@ import { IPost } from "@/lib/post/interface";
 import { IUser } from "@/lib/user/interface";
 import { Box, Typography } from "@mui/material";
 
-async function PostAuthor({ post }: { post: IPost }) {
-  const { data, error, status } = await user!.getUserById(post.userId);
-
-  if (error || !data) return <></>;
-
-  const author = data as IUser;
+function PostAuthor({ author }: { author: IUser }) {
+  if (!author) return <></>;
 
   return (
     <Box sx={{ my: 4 }}>

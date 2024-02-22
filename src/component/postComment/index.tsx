@@ -12,14 +12,8 @@ import {
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 
-async function PostComment({ post }: { post: IPost }) {
-  const { data, error } = await comment!.getComments(post.id);
-
-  if (error) return <></>;
-
-  const comments = data as IComment[];
-
-  if (comments.length === 0) return <></>;
+function PostComment({ comments }: { comments: IComment[] }) {
+  if (!comments) return <></>;
 
   return (
     <Box sx={{ my: 2 }}>
