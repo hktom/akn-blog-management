@@ -32,6 +32,10 @@ set those local env variables :
 - NEXT_PUBLIC_DEFAULT_USER_PASSWORD
 - NEXT_PUBLIC_API_URL
 
+To login use those credentials :
+- email : Sincere@april.biz
+- password : NEXT_PUBLIC_DEFAULT_USER_PASSWORD || erTy3r4t
+
 ```bash
   npm run build && npm run start
 ```
