@@ -3,6 +3,13 @@ import PostList from "@/component/postList";
 import { Box } from "@mui/material";
 import { post } from "@/config/bootsrap";
 import { IPost } from "@/lib/post/interface";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Home | Welcome",
+  description: "Home page of the blog CMS",
+  keywords: "Home page of the blog",
+};
 
 export default async function Home() {
   const { data, error, status } = await post?.getPost();

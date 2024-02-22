@@ -7,6 +7,27 @@ import { IPost } from "@/lib/post/interface";
 import { IUser } from "@/lib/user/interface";
 import { Box, Typography } from "@mui/material";
 import PostFallBack from "./postFallback";
+import type { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata(
+  { params }: { params: { id: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const id = params.id;
+
+  const { data, error } = await post.showPost(+params.id);
+
+  if (error)
+    return {
+      title: "Post not found",
+    };
+
+  const item = data as IPost;
+
+  return {
+    title: item!.title,
+  };
+}
 
 async function PageDetails({ params }: { params: { id: string } }) {
   const resp = await post.showPost(+params.id);

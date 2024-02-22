@@ -1,5 +1,11 @@
 import FormLogin from "@/component/formLogin";
 import { Box, Typography } from "@mui/material";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Login | blog CMS",
+  description: "Login page of the blog CMS",
+};
 
 function LoginPage() {
   return (
