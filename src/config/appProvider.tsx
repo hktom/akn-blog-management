@@ -70,6 +70,14 @@ function AppProvider({ children }: IProps) {
   useEffect(() => {
     fetchCurrentUser();
   }, []);
+
+  const handleSetCurrentPost = (post: IPost | null) => {
+    if (post) {
+      localStorage.setItem("currentPost", JSON.stringify(post));
+      setCurrentPost(post);
+    }
+  };
+
   return (
     <AppsContext.Provider
       value={{
@@ -83,7 +91,7 @@ function AppProvider({ children }: IProps) {
         fetchCurrentUser,
         postActivity: {
           currentPost,
-          setCurrentPost,
+          setCurrentPost: handleSetCurrentPost,
           posts,
           add: addPost,
           init: initPosts,

@@ -16,7 +16,10 @@ export default class Post implements PostInterface {
   }
 
   async addPost(post: IPost): Promise<IPostResponse> {
-    const resp: IPostResponse = await this.axios.post(`${this.url}/posts`, post);
+    const resp: IPostResponse = await this.axios.post(
+      `${this.url}/posts`,
+      post
+    );
     return resp;
   }
 }
