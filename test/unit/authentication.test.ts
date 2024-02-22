@@ -1,10 +1,10 @@
-import Cookie from "../src/lib/cookie/cookies";
-import Authentication from "../src/lib/authentication/authentication";
-import User from "../src/lib/user/user";
 import { fakeUser } from "./user/fakeUser";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Http from "@/lib/http/http";
+import Authentication from "@/lib/authentication/authentication";
+import User from "@/lib/user/user";
+import Cookie from "@/lib/cookie/cookies";
 
 beforeAll(() => {
   jest.mock("js-cookie");

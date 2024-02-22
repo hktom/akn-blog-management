@@ -5,10 +5,10 @@ import {
   waitFor,
   act,
 } from "@testing-library/react";
-import FormLogin from "../src/component/FormLogin";
 import axios from "axios";
-import { fakeUser } from "../test/user/fakeUser";
+import { fakeUser } from "../user/fakeUser";
 import AppProvider from "@/config/appProvider";
+import FormLogin from "@/component/formLogin";
 
 jest.mock("next/navigation", () => require("next-router-mock"));
 jest.mock("axios");

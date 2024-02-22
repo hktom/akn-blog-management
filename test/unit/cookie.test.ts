@@ -1,4 +1,4 @@
-import Cookie from "../src/lib/cookie/cookies";
+import Cookie from "@/lib/cookie/cookies";
 import Cookies from "js-cookie";
 
 beforeAll(() => {

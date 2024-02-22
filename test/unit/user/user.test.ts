@@ -1,8 +1,8 @@
 import axios from "axios";
 import { fakeUser } from "./fakeUser";
-import User from "../../src/lib/user/user";
 import { IUser } from "@/lib/user/interface";
 import Http from "@/lib/http/http";
+import User from "@/lib/user/user";
 
 beforeAll(async () => {
   return jest.mock("axios");

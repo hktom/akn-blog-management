@@ -1,8 +1,8 @@
 import axios from "axios";
 import { fakePost } from "./fakePost";
-import Post from "../../src/lib/post/post";
 import { IPost } from "@/lib/post/interface";
 import Http from "@/lib/http/http";
+import Post from "@/lib/post/post";
 
 beforeAll(async () => {
   return jest.mock("axios");

@@ -5,9 +5,9 @@ import {
   waitFor,
   act,
 } from "@testing-library/react";
-import PostAuthor from "../src/component/postAuthor";
-import AppProvider from "../src/config/appProvider";
-import Home from "../src/app/page";
+import PostAuthor from "../../src/component/postAuthor";
+import AppProvider from "../../src/config/appProvider";
+import Home from "../../src/app/page";
 import axios from "axios";
 
 jest.mock("next/navigation", () => require("next-router-mock"));

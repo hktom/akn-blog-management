@@ -1,8 +1,8 @@
 import axios from "axios";
 import { fakeComment } from "./fakeComment";
-import Commentary from "../../src/lib/comment/comment";
-import { IComment } from "../../src/lib/comment/interface";
 import Http from "@/lib/http/http";
+import Commentary from "@/lib/comment/comment";
+import { IComment } from "@/lib/comment/interface";
 
 beforeAll(async () => {
   return jest.mock("axios");
