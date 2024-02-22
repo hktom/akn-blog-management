@@ -5,13 +5,26 @@
 
 **API:** JSONPlaceholder
 
+## Install dependencies
+
+To install dependencies, run the following command
+```bash
+  npm install
+```
 
 ## Running Tests
 
 To run tests, run the following command
-
+- e2e tests will failed with this command, instead try the section end to end tests section
 ```bash
   npm run test
+```
+
+## Running End to End Tests
+
+To run tests, run the following command after building the app
+```bash
+  npx playwright test 
 ```
 
 ## Running The App on dev
