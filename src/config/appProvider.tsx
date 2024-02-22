@@ -27,6 +27,7 @@ interface IAppContext {
   currentUser: IUser | null;
   userId: number | null;
   postActivity: Partial<IPostActivity>;
+  fetchCurrentUser: () => void;
 }
 
 export const AppsContext = createContext<Partial<IAppContext>>({});
@@ -46,20 +47,28 @@ function AppProvider({ children }: IProps) {
   };
 
   const initPosts = (posts: IPost[]) => {
-    setPosts((prev) => [...posts]);
+    setTimeout(() => {
+      setPosts((prev) => [...posts]);
+    }, 1000);
+  };
+
+  const fetchCurrentUser = async () => {
+    const session = await authentication.checkSession();
+
+    if (!session.userId) {
+      setCurrentUser(null);
+      setUserId(null);
+      return;
+    }
+
+    const { data } = await user.getUserById(session.userId);
+
+    setCurrentUser(data as IUser);
+    setUserId(session.userId);
   };
 
   useEffect(() => {
-    const getUserId = async () => {
-      const session = await authentication.checkSession();
-
-      if (!session.userId) return;
-
-      const { data } = await user.getUserById(session.userId);
-      setCurrentUser(data as IUser);
-      setUserId(session.userId);
-    };
-    getUserId();
+    fetchCurrentUser();
   }, []);
   return (
     <AppsContext.Provider
@@ -71,6 +80,7 @@ function AppProvider({ children }: IProps) {
         authentication,
         currentUser,
         userId,
+        fetchCurrentUser,
         postActivity: {
           currentPost,
           setCurrentPost,

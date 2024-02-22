@@ -59,6 +59,7 @@ function ResponsiveAppBar() {
   };
 
   const router = useRouter();
+  const { authentication, currentUser, fetchCurrentUser } = useContext(AppsContext);
 
   return (
     <AppBar position="static">
@@ -68,8 +69,7 @@ function ResponsiveAppBar() {
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+            onClick={() => router.push("/")}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -78,6 +78,7 @@ function ResponsiveAppBar() {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              cursor: "pointer",
             }}
           >
             LOGO
@@ -129,8 +130,7 @@ function ResponsiveAppBar() {
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+            onClick={() => router.push("/")}
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -140,6 +140,7 @@ function ResponsiveAppBar() {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              cursor: "pointer",
             }}
           >
             LOGO
@@ -162,7 +163,10 @@ function ResponsiveAppBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar
+                  alt={currentUser?.name}
+                  src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/60/60497cfd7859a805a8c53c7bbacedc0ea2eba3fe_full.jpg"
+                />
               </IconButton>
             </Tooltip>
             <Menu
@@ -182,7 +186,15 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={async () => {
+                    await authentication?.logout();
+                    await fetchCurrentUser!();
+                    handleCloseUserMenu;
+                    router.push("/");
+                  }}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

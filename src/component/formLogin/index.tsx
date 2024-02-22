@@ -6,7 +6,7 @@ import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 
 function FormLogin() {
-  const { authentication, cookie } = useContext(AppsContext);
+  const { authentication, cookie, fetchCurrentUser } = useContext(AppsContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,6 +23,7 @@ function FormLogin() {
       return;
     }
     cookie!.create(resp.userId?.toString() || "");
+    await fetchCurrentUser!();
     setLoading((prev) => !prev);
     router.push("/");
   };
